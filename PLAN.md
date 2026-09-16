@@ -71,6 +71,7 @@ scripts/
   build_sysroot.py
   check_pe.py
   check-vm.ps1
+  clean.ps1
   install-harness.ps1
   install-quick.ps1
   run-test.ps1

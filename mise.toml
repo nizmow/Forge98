@@ -24,3 +24,19 @@ run = "pwsh -NoProfile -File scripts/run-win98.ps1"
 [tasks."test:win98"]
 description = "Run a built executable in Windows 98 and report the result"
 run = "pwsh -NoProfile -File scripts/run-test.ps1"
+
+[tasks."clean:downloads"]
+description = "Remove downloaded input artifacts (downloads/)"
+run = "pwsh -NoProfile -File scripts/clean.ps1 -Scope downloads"
+
+[tasks."clean:transient"]
+description = "Remove generated per-run artifacts"
+run = "pwsh -NoProfile -File scripts/clean.ps1 -Scope transient"
+
+[tasks."clean:image"]
+description = "Remove the installed Windows 98 disk images under vm/local"
+run = "pwsh -NoProfile -File scripts/clean.ps1 -Scope image"
+
+[tasks."clean:all"]
+description = "Remove downloads, per-run artifacts, and VM disk images"
+run = "pwsh -NoProfile -File scripts/clean.ps1 -Scope all"
