@@ -161,6 +161,33 @@ This lane is a development aid. Passing it does not by itself establish
 compatibility with an unmodified Windows 98 SE; that reference verification is
 deferred.
 
+## Cleanup
+
+Remove the downloaded ISO (re-downloadable from `sources.lock.json`):
+
+```powershell
+mise run clean:downloads
+```
+
+Remove per-run scratch files:
+
+```powershell
+mise run clean:transient
+```
+
+Remove the installed Windows 98 disk images under `vm/local`. This is
+destructive: the disk must be reinstalled afterwards with `vm:install-quick`
+and `vm:install-harness`:
+
+```powershell
+mise run clean:image
+```
+
+`mise run clean:all` removes downloads, per-run files, and the disk images.
+
+Every task accepts `-DryRun` to list what would be removed, for example
+`mise run clean:image -- -DryRun`.
+
 ## Known Issues
 
 - `hpet=off` is required (see above).
