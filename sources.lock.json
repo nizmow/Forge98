@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "sources": [
+    {
+      "name": "win98-quickinstall-stock",
+      "version": "1.0.1a",
+      "url": "https://github.com/oerg866/win98-quickinstall/releases/download/v1.0.1/win98qi_v1.0.1a_stock.iso",
+      "filename": "win98qi_v1.0.1a_stock.iso",
+      "size": 707946496,
+      "sha256": "242c8e466cb530169d6f2fc4393e692b0e5d01fc7611969434a47e6c2f363fd1",
+      "source": "https://github.com/oerg866/win98-quickinstall/releases/tag/v1.0.1",
+      "notes": "Windows 98 SE stock QuickInstall image; not the 98Lite Micro variant. Contains proprietary and third-party components distributed by the upstream project."
+    }
+  ]
+}
