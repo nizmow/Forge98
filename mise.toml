@@ -1,5 +1,5 @@
 [env]
-_.path = ["C:/Program Files/qemu"]
+_.path = ["C:/Program Files/qemu", "C:/Program Files/LLVM/bin"]
 
 [tasks."vm:check"]
 description = "Validate the QEMU installation and Windows 98 base image"
