@@ -1,0 +1,3 @@
+# DOS/Windows 9x text files must use CRLF line endings.
+*.bat text eol=crlf
+*.vbs text eol=crlf

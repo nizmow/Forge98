@@ -1,0 +1,26 @@
+[env]
+_.path = ["C:/Program Files/qemu"]
+
+[tasks."vm:check"]
+description = "Validate the QEMU installation and Windows 98 base image"
+run = "pwsh -NoProfile -File scripts/check-vm.ps1"
+
+[tasks."vm:prepare-quick"]
+description = "Download the pinned QuickInstall ISO and create the QEMU disk"
+run = "pwsh -NoProfile -File scripts/install-quick.ps1 -PrepareOnly"
+
+[tasks."vm:install-quick"]
+description = "Prepare and start the Windows 98 SE Stock QuickInstall in QEMU"
+run = "pwsh -NoProfile -File scripts/install-quick.ps1"
+
+[tasks."vm:install-harness"]
+description = "Install the one-time Windows 98 boot hook into the base image"
+run = "pwsh -NoProfile -File scripts/install-harness.ps1"
+
+[tasks."vm:run"]
+description = "Run the Windows 98 base image in QEMU"
+run = "pwsh -NoProfile -File scripts/run-win98.ps1"
+
+[tasks."test:win98"]
+description = "Run a built executable in Windows 98 and report the result"
+run = "pwsh -NoProfile -File scripts/run-test.ps1"

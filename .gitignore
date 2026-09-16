@@ -1,0 +1,14 @@
+# Supplied and downloaded inputs
+/downloads/
+
+# Generated build trees
+/out/
+/sysroot/
+/work/
+
+# Licensed operating-system media and mutable VM state
+/vm/local/
+
+# Per-user mise configuration
+/mise.local.toml
+/mise.local.lock
