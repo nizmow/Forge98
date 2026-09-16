@@ -21,15 +21,26 @@ checks have not been implemented.
 
 ## Prerequisites
 
-Install [mise](https://mise.jdx.dev/) and QEMU:
+Install [mise](https://mise.jdx.dev/), QEMU, and LLVM.
+
+QEMU:
 
 - Windows: `winget install SoftwareFreedomConservancy.QEMU`
 - macOS: `brew install qemu`
 - Debian/Ubuntu: `sudo apt install qemu-system-x86`
 - Fedora: `sudo dnf install qemu-system-x86`
 
-QEMU is a host prerequisite and is not managed by mise. The project mise
-environment adds the standard Winget QEMU directory to `PATH`. Then run:
+LLVM (Clang and LLD):
+
+- Windows: `winget install LLVM.LLVM`
+- macOS: `brew install llvm`
+- Debian/Ubuntu: `sudo apt install clang lld`
+- Fedora: `sudo dnf install clang lld`
+
+QEMU and LLVM are host prerequisites and are not managed by mise. The project
+mise environment adds the standard install directories to `PATH`. The
+toolchain is pinned to LLVM 23.1.1 (`clang-cl 23.1.1`, `lld-link 23.1.1`);
+later milestones depend on this exact version. Then run:
 
 ```powershell
 mise run vm:check
