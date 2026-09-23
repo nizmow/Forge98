@@ -14,10 +14,27 @@ automated testing loop in [docs/testing-loop.md](docs/testing-loop.md).
 
 ## Current Status
 
-The project is in its planning and environment-bootstrap phase. QEMU boots a
-Windows 98 SE image, and the test loop can deliver a program, run it, and
-capture its output over a serial port. The compiler pipeline and automated PE
-checks have not been implemented.
+The project is in its early implementation phase. QEMU boots a Windows 98 SE
+image, and the test loop can deliver a program, run it, and capture its output
+over a serial port. The no-CRT sample builds with LLVM, passes fail-closed PE
+header and import validation, and has a recorded Windows 98 execution result
+in [tests/00-no-crt/README.md](tests/00-no-crt/README.md). The broader
+SDK/compiler pipeline is still in progress.
+
+### No-CRT sample
+
+Build the sample and run its fail-closed PE checks:
+
+```powershell
+pwsh -NoProfile -File tests/00-no-crt/build.ps1
+```
+
+Exercise the verifier against the known-good executable and a deliberately
+broken minimum-OS-version fixture:
+
+```powershell
+pwsh -NoProfile -File tests/00-no-crt/test-verifier.ps1
+```
 
 ## Prerequisites
 
