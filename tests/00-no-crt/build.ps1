@@ -42,6 +42,7 @@ function Resolve-Tool {
 $dlltool = Resolve-Tool "llvm-dlltool"
 $clang = Resolve-Tool "clang-cl"
 $link = Resolve-Tool "lld-link"
+$readobj = Resolve-Tool "llvm-readobj"
 
 function Invoke-Tool {
     param([Parameter(Mandatory)] [string] $Tool, [Parameter(Mandatory)] [string[]] $Arguments)
@@ -64,5 +65,7 @@ Invoke-Tool $link @(
     "/subsystem:console,4.0", "/osversion:4.0", "/out:$exePath",
     $objPath, $libPath
 )
+
+& (Join-Path $sourceDir "verify.ps1") -Exe $exePath -LlvmReadobj $readobj
 
 Write-Output "built $exePath"
