@@ -68,11 +68,13 @@ renamed into the cache. Missing, truncated, or modified inputs fail with the
 expected size or hash in the error message. No SDK installer is run.
 
 ```powershell
-.\bootstrap.ps1 -SdkPath .\downloads\sdk-feb-2003
-.\bootstrap.ps1 -DownloadSdk
+mise run sdk:acquire
+mise run sdk:download
 ```
 
-The local command also accepts another directory with that same flat layout.
+Pass an alternate local source directory as an argument, for example
+`mise run sdk:acquire D:\licensed-media\psdk-cabs`; it must use the same flat
+layout.
 Acquisition only stages the original cabinet chain; extraction and pristine
 SDK inventory are separate follow-up work and do not alter the downloaded
 inputs.

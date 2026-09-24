@@ -25,6 +25,25 @@ run = "pwsh -NoProfile -File scripts/run-win98.ps1"
 description = "Run a built executable in Windows 98 and report the result"
 run = "pwsh -NoProfile -File scripts/run-test.ps1"
 
+[tasks."sdk:acquire"]
+description = "Verify and stage local February 2003 Platform SDK CABs"
+usage = '''
+arg "[path]" help="Directory containing the 13 PSDK-FULL.N.cab files" default="downloads/sdk-feb-2003"
+'''
+run = 'pwsh -NoProfile -File bootstrap.ps1 -SdkPath "{{ usage.path }}"'
+
+[tasks."sdk:download"]
+description = "Download, verify, and stage the pinned February 2003 Platform SDK CABs"
+run = "pwsh -NoProfile -File bootstrap.ps1 -DownloadSdk"
+
+[tasks."test:no-crt:build"]
+description = "Build and verify the no-CRT Windows 98 sample"
+run = "pwsh -NoProfile -File tests/00-no-crt/build.ps1"
+
+[tasks."test:no-crt:verify"]
+description = "Test the no-CRT PE verifier against a broken fixture"
+run = "pwsh -NoProfile -File tests/00-no-crt/test-verifier.ps1"
+
 [tasks."clean:downloads"]
 description = "Remove downloaded input artifacts (downloads/)"
 run = "pwsh -NoProfile -File scripts/clean.ps1 -Scope downloads"
