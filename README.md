@@ -45,6 +45,7 @@ SHA-256 before staging files in ignored `downloads/sdk-feb-2003/`:
 ```powershell
 mise run sdk:acquire
 mise run sdk:download
+mise run sdk:extract
 ```
 
 See [docs/sdk.md](docs/sdk.md) for provenance, license notes, and the SDK
