@@ -36,6 +36,20 @@ broken minimum-OS-version fixture:
 pwsh -NoProfile -File tests/00-no-crt/test-verifier.ps1
 ```
 
+## February 2003 Platform SDK
+
+Supply the 13 `PSDK-FULL.N.cab` files in a directory, or let bootstrap download
+the pinned Internet Archive copies. Both routes verify the locked size and
+SHA-256 before staging files in ignored `downloads/sdk-feb-2003/`:
+
+```powershell
+.\bootstrap.ps1 -SdkPath .\downloads\sdk-feb-2003
+.\bootstrap.ps1 -DownloadSdk
+```
+
+See [docs/sdk.md](docs/sdk.md) for provenance, license notes, and the SDK
+assessment.
+
 ## Prerequisites
 
 Install [mise](https://mise.jdx.dev/), QEMU, and LLVM.
