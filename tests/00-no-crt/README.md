@@ -8,7 +8,7 @@ calls the Windows API `ExitProcess(0)` directly.
 From the repository root, run:
 
 ```powershell
-pwsh -NoProfile -File tests/00-no-crt/build.ps1
+mise run test:no-crt:build
 ```
 
 The build and verification below were run with LLVM 23.1.1 (`clang-cl`,

@@ -26,15 +26,29 @@ SDK/compiler pipeline is still in progress.
 Build the sample and run its fail-closed PE checks:
 
 ```powershell
-pwsh -NoProfile -File tests/00-no-crt/build.ps1
+mise run test:no-crt:build
 ```
 
 Exercise the verifier against the known-good executable and a deliberately
 broken minimum-OS-version fixture:
 
 ```powershell
-pwsh -NoProfile -File tests/00-no-crt/test-verifier.ps1
+mise run test:no-crt:verify
 ```
+
+## February 2003 Platform SDK
+
+Supply the 13 `PSDK-FULL.N.cab` files in a directory, or let bootstrap download
+the pinned Internet Archive copies. Both routes verify the locked size and
+SHA-256 before staging files in ignored `downloads/sdk-feb-2003/`:
+
+```powershell
+mise run sdk:acquire
+mise run sdk:download
+```
+
+See [docs/sdk.md](docs/sdk.md) for provenance, license notes, and the SDK
+assessment.
 
 ## Prerequisites
 
