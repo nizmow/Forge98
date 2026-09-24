@@ -67,6 +67,7 @@ runtime/
   src/
 scripts/
   acquire.py
+  extract-sdk.ps1
   extract_sdk.py
   build_sysroot.py
   check_pe.py
@@ -163,8 +164,8 @@ title.
 Support two acquisition modes:
 
 ```powershell
-.\bootstrap.ps1 -SdkPath .\downloads\sdk
-.\bootstrap.ps1 -DownloadSdk
+mise run sdk:acquire .\downloads\sdk
+mise run sdk:download
 ```
 
 `-SdkPath` accepts a documented directory or archive layout. `-DownloadSdk`
@@ -186,12 +187,16 @@ Acceptance:
 
 ## Milestone 4: Extract Without Installing
 
-Determine the smallest redistributable extraction dependency. Prefer tools
-already available on both hosts; otherwise pin a standalone extractor.
+Use the 7-Zip command-line extractor (26.03 used for the initial extraction) to
+open the CAB chain and its component cabinets. Read the Core SDK MSI file and
+directory tables through the Windows Installer API in read-only mode to restore
+the x86 payload paths; do not execute an MSI or any installer action. Record the
+extractor version in the inventory. The future Linux-host milestone may provide
+a different MSI table reader behind the same mise task.
 
-Extract into `work/sdk-pristine/` without executing the SDK installer. Preserve
-the original tree and write a machine-readable inventory containing relative
-path, size, and SHA-256 for every extracted file.
+Run `mise run sdk:extract` to extract into `work/sdk-pristine/` without running
+the SDK installer. Preserve the original package tree and write a machine-readable
+inventory containing relative path, size, and SHA-256 for every extracted file.
 
 Do not normalize names or patch headers in this milestone.
 
@@ -206,7 +211,10 @@ Acceptance:
 
 Compile a small `windows.h` program with `clang-cl` using the pristine SDK
 include directory and Clang's builtin headers. Define the Windows 98 API level
-explicitly, initially `_WIN32_WINNT=0x0410` and `WINVER=0x0410`.
+using the version macros documented by the pristine SDK. Confirm which macros
+gate Win9x declarations (for example, `_WIN32_WINDOWS`) and keep them distinct
+from the NT-family `_WIN32_WINNT` value; do not assume `_WIN32_WINNT=0x0410`
+selects Windows 98.
 
 Capture every incompatibility before adding a patch. Prefer compiler flags and
 small compatibility headers over bulk rewrites of Microsoft headers.

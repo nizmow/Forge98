@@ -36,6 +36,14 @@ run = 'pwsh -NoProfile -File bootstrap.ps1 -SdkPath "{{ usage.path }}"'
 description = "Download, verify, and stage the pinned February 2003 Platform SDK CABs"
 run = "pwsh -NoProfile -File bootstrap.ps1 -DownloadSdk"
 
+[tasks."sdk:extract"]
+description = "Extract the pristine SDK tree and write a SHA-256 inventory"
+usage = '''
+arg "[sdk-path]" help="Directory containing the 13 verified PSDK-FULL.N.cab files" default="downloads/sdk-feb-2003"
+arg "[destination]" help="New output directory under work/" default="work/sdk-pristine"
+'''
+run = 'pwsh -NoProfile -File scripts/extract-sdk.ps1 -SdkPath "{{ usage.sdk_path }}" -Destination "{{ usage.destination }}"'
+
 [tasks."test:no-crt:build"]
 description = "Build and verify the no-CRT Windows 98 sample"
 run = "pwsh -NoProfile -File tests/00-no-crt/build.ps1"

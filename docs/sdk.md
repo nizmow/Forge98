@@ -74,10 +74,36 @@ mise run sdk:download
 
 Pass an alternate local source directory as an argument, for example
 `mise run sdk:acquire D:\licensed-media\psdk-cabs`; it must use the same flat
-layout.
-Acquisition only stages the original cabinet chain; extraction and pristine
-SDK inventory are separate follow-up work and do not alter the downloaded
-inputs.
+layout. Acquisition only stages the original cabinet chain; the separate
+extraction task does not alter those downloaded inputs.
+
+## Extracting the pristine tree
+
+The extraction task uses the 7-Zip command-line tool (version 26.03 was used for
+validation). Install 7-Zip on the host and make `7z` available on `PATH`. It
+opens `CoreSDK-x86.msi` through the Windows Installer API in read-only mode to
+map cabinet file keys to their original `Include` and `Lib` paths; it does not
+run the MSI, invoke setup, or modify Windows Installer state. The original
+package files stay together under `work/sdk-pristine/source/`, and the mapped
+CoreSDK x86 payload is written under `work/sdk-pristine/x86/`. MSI table mapping
+currently uses the Windows Installer API on Windows; Linux-host extraction can
+use an equivalent MSI table reader when that host is added.
+
+```powershell
+mise run sdk:extract
+```
+
+The task verifies the 13 locked CABs before extraction and writes
+`work/sdk-pristine.inventory.json` beside the extracted tree. The inventory
+lists each file's relative path, byte size, and SHA-256, and records the 7-Zip
+version and locked cabinet identities. Choose a different destination for a
+second clean extraction and compare inventory hashes:
+
+```powershell
+mise run sdk:extract downloads/sdk-feb-2003 work/sdk-pristine-a
+mise run sdk:extract downloads/sdk-feb-2003 work/sdk-pristine-b
+Get-FileHash work/sdk-pristine-a.inventory.json, work/sdk-pristine-b.inventory.json
+```
 
 ## Windows 98 coverage: evidence and gaps
 
@@ -144,17 +170,15 @@ use the SDK does not make this community-upload source authoritative.
 
 ## Required checks to reach a decision
 
-Remaining checks before making a broad compatibility claim:
+Remaining checks after pinned acquisition and pristine extraction:
 
 1. Compare the community-uploaded files with a Microsoft-hosted copy or an
    independent Microsoft checksum if one becomes available.
-2. Finish the pristine-file inventory and capture the exact x86 Include/Lib
-   extraction recipe for reproducible staging.
-3. Resolve the missing compiler/C headers identified by the `windows.h` probe
+2. Resolve the missing compiler/C headers identified by the `windows.h` probe
    without selecting modern Windows SDK declarations.
-4. Audit the original libraries' imports, including the ordinal imports used by
+3. Audit the original libraries' imports, including the ordinal imports used by
    these probes, against Windows 98 SE exports.
-5. Run the console and GUI samples on the Windows 98 SE VM. The SDK's own
+4. Run the console and GUI samples on the Windows 98 SE VM. The SDK's own
    supported-target list is not runtime verification.
 
 If the compiler/CRT-header boundary cannot be resolved without selecting
